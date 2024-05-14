@@ -1,4 +1,4 @@
-# to-do
+# lista-compra
 Lista de tareas en JavaScript
 Creado en este tutorial: https://youtu.be/URk526D9mls
 
