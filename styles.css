@@ -1,113 +1,148 @@
 :root {
-    --primary: #A5C882;
-    --secondary: #D33F49;
-    --light: #fff;
-    --dark: #000;
-    --diabled: #e7e7e7;
+  --primary: #a5c882;
+  --primary2: #375816;
+  --secondary: #d33f49;
+  --light: #fff;
+  --dark: #000;
+  --diabled: #e7e7e7;
+  --diabled2: #ecd3d3;
 }
 
 body {
-    font-family: 'Lato', sans-serif;
-    margin: 0;
-    height: 100vh;
-    background-color: var(--diabled);
+  font-family: "Lato", sans-serif;
+  margin: 0;
+  height: 100vh;
+  background-color: var(--diabled);
 }
 
 *:first-letter {
-    text-transform: capitalize;
+  text-transform: capitalize;
 }
 
 .roundBorder {
-    border-radius: 5px;
+  border-radius: 5px;
 }
 
 .list {
-    margin: 25px auto;
-    padding: 25px;
-    background-color: var(--light);
-    width: 100%;
-    max-width: 350px;
+  margin: 25px auto;
+  padding: 25px;
+  background-color: var(--light);
+  width: 100%;
+  max-width: 350px;
 }
 
 .date {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .dateRight {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 #dateNumber {
-    font-size: 50px;
+  font-size: 50px;
 }
 
 #dateText {
-    letter-spacing: 3px;
-    text-transform: uppercase;
+  letter-spacing: 3px;
+  text-transform: uppercase;
 }
 
 #dateMonth,
 #dateNumber,
-#dateText  {
-    font-weight: bold;
+#dateText {
+  font-weight: bold;
 }
 
 #dateMonth,
 #dateYear {
-    margin-left: 7px;
-    font-size: 20px;
+  margin-left: 7px;
+  font-size: 20px;
 }
 
 form {
-    margin: 20px 0;
-    display: grid;
-    grid-auto-flow: column;
-    grid-template-columns: auto 35px auto;
-    grid-column-gap: 15px;
+  margin: 20px 0;
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: auto 35px auto;
+  grid-column-gap: 15px;
 }
 
 input {
-    border: none;
-    padding-left: 10px;
-    background-color: var(--diabled);
+  border: none;
+  padding-left: 10px;
+  background-color: var(--diabled);
 }
 
 input:focus {
-    outline: none;
+  outline: none;
 }
 
 .addTaskButton,
 .orderButton {
-    border: none;
-    font-weight: bold;
-    cursor: pointer;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
 }
 
 .addTaskButton {
-    height: 35px;
-    border-radius: 50%;
-    font-size: 18px;
-    background-color: var(--diabled);
+  height: 35px;
+  border-radius: 50%;
+  font-size: 18px;
+  background-color: var(--diabled);
 }
 
 .orderButton {
-    background-color: var(--secondary);
-    color: var(--light);
+  background-color: var(--secondary);
+  color: var(--light);
 }
 
 .task {
-    background-color: var(--primary);
-    padding: 15px;
-    margin-top: 15px;
-    color: var(--light);
-    cursor: pointer;
+  background-color: var(--primary);
+  padding: 5px;
+  margin-top: 5px;
+  color: var(--light);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+}
+.taskComent {
+  background-color: var(--primary2);
+  width: 77%;
+  align-content: center;
+  padding-left: 4px;
+}
+.taskNum {
+  background-color: var(--primary2);
+  width: 10%;
+  text-align: center;
+  align-content: center;
+}
+.taskModNum {
+  background-color: var(--primary);
+  width: 10%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.taskSum,
+.taskRes {
+  background-color: var(--primary2);
+  width: 100%;
+  height: 45%;
+  text-align: center;
+  align-content: center;
 }
 
 .done {
-    background-color: var(--diabled);
-    text-decoration: line-through;
-    color: var(--dark);
+  background-color: var(--diabled);
+  text-decoration: line-through;
+  color: var(--dark);
+}
+.doneTask,
+.doneTask .taskModNum {
+  background-color: var(--diabled2);
 }
