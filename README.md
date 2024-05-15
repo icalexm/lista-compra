@@ -1,5 +1,11 @@
 # lista-compra
-Lista de tareas en JavaScript
-Creado en este tutorial: https://youtu.be/URk526D9mls
 
-<img width="422" alt="Screen Shot 2021-09-11 at 15 04 40" src="https://user-images.githubusercontent.com/26985597/132961606-c021fb6d-6fa2-4d44-bf61-deb2ac2ac9f0.png">
+Lista de la compra en JavaScript
+
+Permite entrar los productos.
+
+Con '+' y '-' permite incrementar o decrementar la cantidad.
+
+Si la cantidad llega a '-1', pregunta si queres borrar el producto, si dices que si lo elimina.
+
+La lista de la compra queda en la memoria local del terminal que uses

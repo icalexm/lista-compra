@@ -1,3 +1,5 @@
+// Lineas compra
+let lista = localStorage.getItem("listaComra") || "";
 // Info date
 const dateNumber = document.getElementById("dateNumber");
 const dateText = document.getElementById("dateText");
@@ -17,8 +19,23 @@ const setDate = () => {
 
 const addNewTask = (event) => {
   event.preventDefault();
+
   const { value } = event.target.taskText;
   if (!value) return;
+
+  const str = lista;
+  lista = `1, ${value}, 0`;
+  if (str.length > 0) {
+    lista += "|" + str;
+  }
+
+  //lista = [{ cant: 1, desc: value }];
+  localStorage.setItem("listaComra", lista);
+
+  creaLinea(value, 1, 0);
+  event.target.reset();
+};
+function creaLinea(value, cant, anulado) {
   const task = document.createElement("article");
   task.classList.add("task", "roundBorder");
   //task.addEventListener("click", changeTaskState);
@@ -27,13 +44,14 @@ const addNewTask = (event) => {
 
   const task1 = document.createElement("div");
   task1.classList.add("taskComent", "roundBorder");
+
   task1.addEventListener("click", changeTaskState);
   task1.textContent = value;
   task.prepend(task1);
 
   const task2 = document.createElement("div");
   task2.classList.add("taskNum", "roundBorder");
-  task2.textContent = 1;
+  task2.textContent = cant;
   task.prepend(task2);
 
   const taskModNum = document.createElement("article");
@@ -53,9 +71,7 @@ const addNewTask = (event) => {
   taskModNum.prepend(taskRes);
 
   tasksContainer.prepend(task);
-
-  event.target.reset();
-};
+}
 
 const changeTaskState = (event) => {
   event.target.classList.toggle("done");
@@ -80,10 +96,46 @@ function ModificaNum(event, valor) {
   }
   let cant = parseInt($num.innerText) + valor;
 
+  let lis = lista.split("|");
+  // let d = `, ${$task.querySelector(".taskComent").innerText.toLowerCase()},`;
+  // let elLis = lis.find(
+  //   (elemento) =>
+  //     elemento.indexOf(
+  //       `, ${$task.querySelector(".taskComent").innerText.toLowerCase()},`
+  //     ) !== -1
+  // );
+  let i = lis.indexOf(
+    lis.find(
+      (elemento) =>
+        elemento.indexOf(
+          `, ${$task.querySelector(".taskComent").innerText.toLowerCase()},`
+        ) !== -1
+    )
+  );
+
   if (cant < 0) {
-    cant = 0;
+    if (window.confirm("¿Confirma borrar definitvament el producto?")) {
+      console.log("Posicion", i);
+      if (i > -1) {
+        lis.splice(i, 1);
+        lista = lis.join("|");
+        localStorage.setItem("listaComra", lista);
+        $task.remove();
+        return;
+      }
+    } else {
+      cant = 0;
+      return;
+    }
   }
   $num.innerHTML = cant;
+  let lmod = lis[i].split(",");
+  lmod[0] = cant;
+
+  lis[i] = lmod.toString();
+  lista = lis.join("|");
+
+  localStorage.setItem("listaComra", lista);
 }
 
 const order = () => {
@@ -99,4 +151,14 @@ const renderOrderedTasks = () => {
   order().forEach((el) => tasksContainer.appendChild(el));
 };
 
+function pintaLista() {
+  if (lista.length === 0) return;
+  lista.split("|").forEach((el) => {
+    console.log(el);
+    const item = el.split(",");
+    creaLinea(item[1], item[0], item[2]);
+  });
+}
+
 setDate();
+pintaLista();

@@ -146,3 +146,6 @@ input:focus {
 .doneTask .taskModNum {
   background-color: var(--diabled2);
 }
+.none * {
+  display: none;
+}
