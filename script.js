@@ -24,7 +24,7 @@ const addNewTask = (event) => {
   if (!value) return;
 
   const str = lista;
-  lista = `1, ${value}, 0`;
+  lista = `1,${value},0`;
   if (str.length > 0) {
     lista += "|" + str;
   }
@@ -38,12 +38,14 @@ const addNewTask = (event) => {
 function creaLinea(value, cant, anulado) {
   const task = document.createElement("article");
   task.classList.add("task", "roundBorder");
+  if (anulado === "1") task.classList.add("doneTask");
   //task.addEventListener("click", changeTaskState);
   // task.textContent = value;
   // tasksContainer.prepend(task);
 
   const task1 = document.createElement("div");
   task1.classList.add("taskComent", "roundBorder");
+  if (anulado === "1") task1.classList.add("done");
 
   task1.addEventListener("click", changeTaskState);
   task1.textContent = value;
@@ -51,6 +53,7 @@ function creaLinea(value, cant, anulado) {
 
   const task2 = document.createElement("div");
   task2.classList.add("taskNum", "roundBorder");
+  if (anulado === "1") task2.classList.add("done");
   task2.textContent = cant;
   task.prepend(task2);
 
@@ -60,12 +63,14 @@ function creaLinea(value, cant, anulado) {
 
   const taskSum = document.createElement("div");
   taskSum.classList.add("taskSum", "roundBorder");
+  if (anulado === "1") taskSum.classList.add("done");
   taskSum.addEventListener("click", sumaNum);
   taskSum.textContent = "+";
   taskModNum.prepend(taskSum);
 
   const taskRes = document.createElement("div");
   taskRes.classList.add("taskRes", "roundBorder");
+  if (anulado === "1") taskRes.classList.add("done");
   taskRes.addEventListener("click", restaNum);
   taskRes.textContent = "-";
   taskModNum.prepend(taskRes);
@@ -80,6 +85,14 @@ const changeTaskState = (event) => {
   $task.querySelector(".taskRes").classList.toggle("done");
   $task.querySelector(".taskSum").classList.toggle("done");
   $task.classList.toggle("doneTask");
+  let lis = lista.split("|");
+  let i = obternerLinea($task, lis);
+  let lmod = lis[i].split(",");
+  lmod[2] = $task.classList.contains("doneTask") ? 1 : 0;
+
+  lis[i] = lmod.toString();
+  lista = lis.join("|");
+  localStorage.setItem("listaComra", lista);
 };
 
 const sumaNum = (event) => {
@@ -88,6 +101,16 @@ const sumaNum = (event) => {
 const restaNum = (event) => {
   ModificaNum(event, -1);
 };
+function obternerLinea(task, lis) {
+  return lis.indexOf(
+    lis.find(
+      (elemento) =>
+        elemento.indexOf(
+          `,${task.querySelector(".taskComent").innerText.toLowerCase()},`
+        ) !== -1
+    )
+  );
+}
 function ModificaNum(event, valor) {
   const $task = event.target.closest(".task"),
     $num = $task.querySelector(".taskNum");
@@ -97,21 +120,7 @@ function ModificaNum(event, valor) {
   let cant = parseInt($num.innerText) + valor;
 
   let lis = lista.split("|");
-  // let d = `, ${$task.querySelector(".taskComent").innerText.toLowerCase()},`;
-  // let elLis = lis.find(
-  //   (elemento) =>
-  //     elemento.indexOf(
-  //       `, ${$task.querySelector(".taskComent").innerText.toLowerCase()},`
-  //     ) !== -1
-  // );
-  let i = lis.indexOf(
-    lis.find(
-      (elemento) =>
-        elemento.indexOf(
-          `, ${$task.querySelector(".taskComent").innerText.toLowerCase()},`
-        ) !== -1
-    )
-  );
+  let i = obternerLinea($task, lis);
 
   if (cant < 0) {
     if (window.confirm("¿Confirma borrar definitvament el producto?")) {
