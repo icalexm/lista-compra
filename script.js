@@ -47,7 +47,7 @@ function creaLinea(value, cant, anulado) {
   task1.classList.add("taskComent", "roundBorder");
   if (anulado === "1") task1.classList.add("done");
 
-  task1.addEventListener("click", changeTaskState);
+  //task1.addEventListener("click", changeTaskState);
   task1.textContent = value;
   task.prepend(task1);
 
@@ -64,14 +64,14 @@ function creaLinea(value, cant, anulado) {
   const taskSum = document.createElement("div");
   taskSum.classList.add("taskSum", "roundBorder");
   if (anulado === "1") taskSum.classList.add("done");
-  taskSum.addEventListener("click", sumaNum);
+  //taskSum.addEventListener("click", sumaNum);
   taskSum.textContent = "+";
   taskModNum.prepend(taskSum);
 
   const taskRes = document.createElement("div");
   taskRes.classList.add("taskRes", "roundBorder");
   if (anulado === "1") taskRes.classList.add("done");
-  taskRes.addEventListener("click", restaNum);
+  //taskRes.addEventListener("click", restaNum);
   taskRes.textContent = "-";
   taskModNum.prepend(taskRes);
 
@@ -171,3 +171,10 @@ function pintaLista() {
 
 setDate();
 pintaLista();
+
+document.addEventListener("click", (e) => {
+  console.log("clicK:", "e.target:", e.target, "this:", this);
+  if (e.target.classList.contains("taskComent")) changeTaskState(e);
+  else if (e.target.classList.contains("taskSum")) sumaNum(e);
+  else if (e.target.classList.contains("taskRes")) restaNum(e);
+});

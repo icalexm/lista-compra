@@ -149,3 +149,8 @@ input:focus {
 .none * {
   display: none;
 }
+.versio {
+  font-size: 9px;
+  text-align: right;
+  color: rgb(165, 161, 161);
+}
