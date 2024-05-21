@@ -30,7 +30,8 @@ const addNewTask = (event) => {
   }
 
   //lista = [{ cant: 1, desc: value }];
-  localStorage.setItem("listaComra", lista);
+  // localStorage.setItem("listaComra", lista);
+  guardarLista();
 
   creaLinea(value, 1, 0);
   event.target.reset();
@@ -92,7 +93,8 @@ const changeTaskState = (event) => {
 
   lis[i] = lmod.toString();
   lista = lis.join("|");
-  localStorage.setItem("listaComra", lista);
+  // localStorage.setItem("listaComra", lista);
+  guardarLista();
 };
 
 const sumaNum = (event) => {
@@ -105,9 +107,11 @@ function obternerLinea(task, lis) {
   return lis.indexOf(
     lis.find(
       (elemento) =>
-        elemento.indexOf(
-          `,${task.querySelector(".taskComent").innerText.toLowerCase()},`
-        ) !== -1
+        elemento
+          .toLowerCase()
+          .indexOf(
+            `,${task.querySelector(".taskComent").innerText.toLowerCase()},`
+          ) !== -1
     )
   );
 }
@@ -124,11 +128,12 @@ function ModificaNum(event, valor) {
 
   if (cant < 0) {
     if (window.confirm("¿Confirma borrar definitvament el producto?")) {
-      console.log("Posicion", i);
+      // console.log("Posicion", i);
       if (i > -1) {
         lis.splice(i, 1);
         lista = lis.join("|");
-        localStorage.setItem("listaComra", lista);
+        // localStorage.setItem("listaComra", lista);
+        guardarLista();
         $task.remove();
         return;
       }
@@ -144,7 +149,8 @@ function ModificaNum(event, valor) {
   lis[i] = lmod.toString();
   lista = lis.join("|");
 
-  localStorage.setItem("listaComra", lista);
+  // localStorage.setItem("listaComra", lista);
+  guardarLista();
 }
 
 const order = () => {
@@ -163,17 +169,21 @@ const renderOrderedTasks = () => {
 function pintaLista() {
   if (lista.length === 0) return;
   lista.split("|").forEach((el) => {
-    console.log(el);
+    // console.log(el);
     const item = el.split(",");
     creaLinea(item[1], item[0], item[2]);
   });
+}
+
+function guardarLista() {
+  localStorage.setItem("listaComra", lista);
 }
 
 setDate();
 pintaLista();
 
 document.addEventListener("click", (e) => {
-  console.log("clicK:", "e.target:", e.target, "this:", this);
+  // console.log("clicK:", "e.target:", e.target, "this:", this);
   if (e.target.classList.contains("taskComent")) changeTaskState(e);
   else if (e.target.classList.contains("taskSum")) sumaNum(e);
   else if (e.target.classList.contains("taskRes")) restaNum(e);
