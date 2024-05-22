@@ -1,6 +1,10 @@
 // Lineas compra
+const lis_id = 0,
+  lis_cant = 1,
+  lis_desc = 2,
+  lis_off = 3;
 let lista = localStorage.getItem("listaComra") || "",
-  ultId = localStorage.getItem("ultimoId") || 0;
+  ultId = parseInt(localStorage.getItem("ultimoId")) || 0;
 // Info date
 const dateNumber = document.getElementById("dateNumber");
 const dateText = document.getElementById("dateText");
@@ -94,7 +98,7 @@ const changeTaskState = (event) => {
   let lis = lista.split("|");
   let i = obternerLinea($task, lis);
   let lmod = lis[i].split(",");
-  lmod[3] = $task.classList.contains("doneTask") ? 1 : 0;
+  lmod[lis_off] = $task.classList.contains("doneTask") ? 1 : 0;
 
   lis[i] = lmod.toString();
   lista = lis.join("|");
@@ -150,7 +154,7 @@ function ModificaNum(event, valor) {
   }
   $num.innerHTML = cant;
   let lmod = lis[i].split(",");
-  lmod[1] = cant;
+  lmod[lis_cant] = cant;
 
   lis[i] = lmod.toString();
   lista = lis.join("|");
@@ -165,11 +169,18 @@ const order = () => {
   tasksContainer.childNodes.forEach((el) => {
     el.classList.contains("doneTask") ? done.push(el) : toDo.push(el);
   });
+  // let lis = lista.split("|").sort();
+  // lis.forEach((el) => {
+  //   el.split(",")[lis_off] === "1" ? done.push(el) : toDo.push(el);
+  // });
   return [...toDo, ...done];
 };
 
 const renderOrderedTasks = () => {
-  order().forEach((el) => tasksContainer.appendChild(el));
+  order().forEach((el) => {
+    // console.log(el);
+    tasksContainer.appendChild(el);
+  });
 };
 
 function pintaLista() {
@@ -177,7 +188,12 @@ function pintaLista() {
   lista.split("|").forEach((el) => {
     // console.log(el);
     const item = el.split(",");
-    creaLinea(item[0].split("_")[1], item[2], item[1], item[3]);
+    creaLinea(
+      item[lis_id].split("_")[1],
+      item[lis_desc],
+      item[lis_cant],
+      item[lis_off]
+    );
   });
 }
 
