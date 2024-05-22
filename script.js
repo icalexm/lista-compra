@@ -1,5 +1,6 @@
 // Lineas compra
-let lista = localStorage.getItem("listaComra") || "";
+let lista = localStorage.getItem("listaComra") || "",
+  ultId = localStorage.getItem("ultimoId") || 0;
 // Info date
 const dateNumber = document.getElementById("dateNumber");
 const dateText = document.getElementById("dateText");
@@ -23,8 +24,10 @@ const addNewTask = (event) => {
   const { value } = event.target.taskText;
   if (!value) return;
 
+  ultId += 1;
+
   const str = lista;
-  lista = `1,${value},0`;
+  lista = `id_${ultId},1,${value},0`;
   if (str.length > 0) {
     lista += "|" + str;
   }
@@ -32,13 +35,14 @@ const addNewTask = (event) => {
   //lista = [{ cant: 1, desc: value }];
   // localStorage.setItem("listaComra", lista);
   guardarLista();
-
-  creaLinea(value, 1, 0);
+  creaLinea(ultId, value, 1, 0);
   event.target.reset();
 };
-function creaLinea(value, cant, anulado) {
+function creaLinea(id, value, cant, anulado) {
+  let strId = "Id_" + id;
   const task = document.createElement("article");
   task.classList.add("task", "roundBorder");
+  task.setAttribute("data-id", strId);
   if (anulado === "1") task.classList.add("doneTask");
   //task.addEventListener("click", changeTaskState);
   // task.textContent = value;
@@ -46,6 +50,7 @@ function creaLinea(value, cant, anulado) {
 
   const task1 = document.createElement("div");
   task1.classList.add("taskComent", "roundBorder");
+  task1.setAttribute("data-id", strId);
   if (anulado === "1") task1.classList.add("done");
 
   //task1.addEventListener("click", changeTaskState);
@@ -89,7 +94,7 @@ const changeTaskState = (event) => {
   let lis = lista.split("|");
   let i = obternerLinea($task, lis);
   let lmod = lis[i].split(",");
-  lmod[2] = $task.classList.contains("doneTask") ? 1 : 0;
+  lmod[3] = $task.classList.contains("doneTask") ? 1 : 0;
 
   lis[i] = lmod.toString();
   lista = lis.join("|");
@@ -104,14 +109,15 @@ const restaNum = (event) => {
   ModificaNum(event, -1);
 };
 function obternerLinea(task, lis) {
+  let id = task.dataset.id.toLowerCase();
+
   return lis.indexOf(
     lis.find(
       (elemento) =>
-        elemento
-          .toLowerCase()
-          .indexOf(
-            `,${task.querySelector(".taskComent").innerText.toLowerCase()},`
-          ) !== -1
+        elemento.toLowerCase().indexOf(
+          id + ","
+          // `,${task.querySelector(".taskComent").innerText.toLowerCase()},`
+        ) !== -1
     )
   );
 }
@@ -144,7 +150,7 @@ function ModificaNum(event, valor) {
   }
   $num.innerHTML = cant;
   let lmod = lis[i].split(",");
-  lmod[0] = cant;
+  lmod[1] = cant;
 
   lis[i] = lmod.toString();
   lista = lis.join("|");
@@ -171,12 +177,13 @@ function pintaLista() {
   lista.split("|").forEach((el) => {
     // console.log(el);
     const item = el.split(",");
-    creaLinea(item[1], item[0], item[2]);
+    creaLinea(item[0].split("_")[1], item[2], item[1], item[3]);
   });
 }
 
 function guardarLista() {
   localStorage.setItem("listaComra", lista);
+  localStorage.setItem("ultimoId", ultId);
 }
 
 setDate();
