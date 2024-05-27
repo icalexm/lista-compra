@@ -166,21 +166,26 @@ function ModificaNum(event, valor) {
 const order = () => {
   const done = [];
   const toDo = [];
-  tasksContainer.childNodes.forEach((el) => {
-    el.classList.contains("doneTask") ? done.push(el) : toDo.push(el);
-  });
-  // let lis = lista.split("|").sort();
-  // lis.forEach((el) => {
-  //   el.split(",")[lis_off] === "1" ? done.push(el) : toDo.push(el);
+  // tasksContainer.childNodes.forEach((el) => {
+  //   el.classList.contains("doneTask") ? done.push(el) : toDo.push(el);
   // });
+  let lis = lista.split("|").sort();
+  lis.forEach((el) => {
+    el.split(",")[lis_off] === "0" ? done.push(el) : toDo.push(el);
+  });
+  console.log(done, toDo);
   return [...toDo, ...done];
 };
 
 const renderOrderedTasks = () => {
-  order().forEach((el) => {
-    // console.log(el);
-    tasksContainer.appendChild(el);
-  });
+  // order().forEach((el) => {
+  //   // console.log(el);
+  //   tasksContainer.appendChild(el);
+  // });
+  lista = order().join("|");
+  guardarLista();
+  tasksContainer.innerHTML = "";
+  pintaLista();
 };
 
 function pintaLista() {
