@@ -182,6 +182,7 @@ const renderOrderedTasks = () => {
   //   // console.log(el);
   //   tasksContainer.appendChild(el);
   // });
+  nomProd.value = "";
   lista = order().join("|");
   guardarLista();
   tasksContainer.innerHTML = "";
@@ -216,3 +217,36 @@ document.addEventListener("click", (e) => {
   else if (e.target.classList.contains("taskSum")) sumaNum(e);
   else if (e.target.classList.contains("taskRes")) restaNum(e);
 });
+
+nomProd.oninput = function (ev) {
+  console.log(nomProd.value, ev.target, this);
+  const tasks = document.querySelectorAll("article.task");
+  const searchTerm = nomProd.value.toLowerCase();
+
+  console.log(tasks);
+
+  resetTask(tasks, true);
+  searchTerm.split(" ").forEach((search) => {
+    if (search.length > 0) {
+      tasks.forEach((task) => {
+        const comen = task
+          .querySelector(".taskComent")
+          .textContent.toLowerCase();
+        console.log(comen, search, comen.includes(search));
+        if (comen.includes(search)) {
+          task.classList.remove("none");
+        }
+      });
+    }
+  });
+};
+
+function resetTask(tasks, esNone) {
+  tasks.forEach((task) => {
+    if (esNone) {
+      task.classList.add("none");
+    } else {
+      task.classList.remove("none");
+    }
+  });
+}
