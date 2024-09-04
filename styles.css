@@ -109,18 +109,21 @@ input:focus {
   display: flex;
   justify-content: space-between;
 }
+
 .taskComent {
   background-color: var(--primary2);
   width: 77%;
   align-content: center;
   padding-left: 4px;
 }
+
 .taskNum {
   background-color: var(--primary2);
   width: 10%;
   text-align: center;
   align-content: center;
 }
+
 .taskModNum {
   background-color: var(--primary);
   width: 10%;
@@ -128,6 +131,7 @@ input:focus {
   flex-direction: column;
   justify-content: space-between;
 }
+
 .taskSum,
 .taskRes {
   background-color: var(--primary2);
@@ -142,10 +146,13 @@ input:focus {
   text-decoration: line-through;
   color: var(--dark);
 }
+
 .doneTask,
 .doneTask .taskModNum {
   background-color: var(--diabled2);
 }
+
+.none,
 .none * {
   display: none;
 }
