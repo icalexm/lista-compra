@@ -152,7 +152,10 @@ input:focus {
   background-color: var(--diabled2);
 }
 
-.none,
+.none {
+  display: none;
+}
+
 .none * {
   display: none;
 }
